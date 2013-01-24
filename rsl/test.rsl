@@ -1,0 +1,11 @@
+project := %CURRENT_PROJECT
+cls = project.pkg("p").classes.first
+cls.fields.select(By.modifier("public")).select(By.modifier(With.out("final"))).toRuby.each do |f|
+  f.encapsulate
+end
+
+# final to BIG_LETTER
+cls.fields.select(By.modifier("final")).toRuby.each do |f|
+  f.rename(f.name.upcase)
+end
+
