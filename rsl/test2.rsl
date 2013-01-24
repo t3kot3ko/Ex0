@@ -1,0 +1,18 @@
+project := %CURRENT_PROJECT
+
+def solve(cls)
+	cls.fields.select(By.modifier("public")).select(By.modifier(With.out("final"))).toRuby.each do |f|
+	  f.encapsulate
+	end
+	
+	# final to BIG_LETTER
+	cls.fields.select(By.modifier("final")).toRuby.each do |f|
+	  f.rename(f.name.upcase)
+	end
+end
+
+# adapt to all classes
+project.pkg("q").classes.toRuby.each do |c|
+	solve(c)
+end
+
